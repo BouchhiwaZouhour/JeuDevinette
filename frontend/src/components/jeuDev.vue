@@ -29,11 +29,15 @@
           <!-- Input Field -->
           <div class="input-group mb-3">
             <input v-model.number="tentative" type="number"  min="0" max="100" placeholder="Entrez un nombre (0-100)" class="form-control form-control-lg"@keyup.enter="verifier" />
-            <button  @click="verifier" class="btn btn-primary">Go</button>
+            <button  @click="verifier" class="btn btn-primary">Go
+            </button>
           </div>
 
           <!-- Submit Button -->
-          <button @click="verifier" class="btn btn-primary w-100 py-2 fw-bold">
+          <button 
+            @click="verifier"
+            class="btn btn-primary w-100 py-2 fw-bold"
+          >
             Vérifier
           </button>
         </div>
@@ -60,7 +64,12 @@
           </div>
 
           <div class="mb-3">
-            <input v-model="nom" type="text" placeholder="Votre nom pour le tableau des scores" class="form-control form-control-lg"  />
+            <input
+              v-model="nom"
+              type="text"
+              placeholder="Votre nom pour le tableau des scores"
+              class="form-control form-control-lg"
+            />
           </div>
           <button 
             @click="enregistrerScore"
@@ -232,7 +241,7 @@ const enregistrerScore = async () => {
     await axios.post('http://localhost:3000/api/game/save-score', {
       name: nom.value,
       score: score.value,
-      temps: compteur.value
+      temps:  parseInt(compteur.value)
     });
     message.value = `Score de ${nom.value} (${score.value}/50) enregistré !`;
     messageType.value = 'success';
