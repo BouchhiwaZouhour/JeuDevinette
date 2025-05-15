@@ -38,8 +38,8 @@ router.post('/guess', (req, res) => {
 
 //enregistrer score
 router.post('/save-score', (req, res) => {
-  const { name, score } = req.body;
-  const sql = 'INSERT INTO scores (name, score) VALUES (?, ?)';
+  const { name, score,temps  } = req.body;
+  const sql = 'INSERT INTO scores (name, score,temps ) VALUES (?, ?,?)';
    db.query(sql, [name, score], (err, result) => {
     if (err) {
       console.error('Erreur insertion score :', err);

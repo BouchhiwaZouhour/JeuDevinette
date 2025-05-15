@@ -11,18 +11,9 @@
       <div class="card-body">
         <!-- Action Buttons -->
         <div class="d-flex gap-2 mb-4">
-          <button 
-            @click="demarrerJeu"
-            class="btn btn-success flex-grow-1 fw-bold"
-          >
-            Nouvelle Partie
-          </button>
-          <button 
-            @click="afficherScores"
-            class="btn btn-info text-white fw-bold"
-          >
-            Scores
-          </button>
+          <button @click="demarrerJeu" class="btn btn-success flex-grow-1 fw-bold" > Nouvelle Partie</button>
+            
+          <button @click="afficherScores"  class="btn btn-info text-white fw-bold"> Scores</button>
         </div>
 
         <!-- Game Area -->
@@ -32,31 +23,17 @@
             <span class="text-primary fw-medium">Tentative</span>
             <span class="badge bg-primary rounded-pill">{{ attempts }}/5</span>
           </div>
-
+          <div v-if="jeuEnCours">
+                ⏱ Temps écoulé : {{ compteur }} secondes
+          </div>
           <!-- Input Field -->
           <div class="input-group mb-3">
-            <input
-              v-model.number="tentative"
-              type="number"
-              min="0"
-              max="100"
-              placeholder="Entrez un nombre (0-100)"
-              class="form-control form-control-lg"
-              @keyup.enter="verifier"
-            />
-            <button 
-              @click="verifier"
-              class="btn btn-primary"
-            >
-              Go
-            </button>
+            <input v-model.number="tentative" type="number"  min="0" max="100" placeholder="Entrez un nombre (0-100)" class="form-control form-control-lg"@keyup.enter="verifier" />
+            <button  @click="verifier" class="btn btn-primary">Go</button>
           </div>
 
           <!-- Submit Button -->
-          <button 
-            @click="verifier"
-            class="btn btn-primary w-100 py-2 fw-bold"
-          >
+          <button @click="verifier" class="btn btn-primary w-100 py-2 fw-bold">
             Vérifier
           </button>
         </div>
@@ -73,9 +50,7 @@
         >
           {{ message }}
         </div>
-<div v-if="jeuEnCours">
-  ⏱ Temps écoulé : {{ compteur }} secondes
-</div>
+
 
         <!-- Win Form -->
         <div v-if="gagne" class="mt-4 animate__animated animate__fadeIn">
@@ -85,12 +60,7 @@
           </div>
 
           <div class="mb-3">
-            <input
-              v-model="nom"
-              type="text"
-              placeholder="Votre nom pour le tableau des scores"
-              class="form-control form-control-lg"
-            />
+            <input v-model="nom" type="text" placeholder="Votre nom pour le tableau des scores" class="form-control form-control-lg"  />
           </div>
           <button 
             @click="enregistrerScore"
@@ -163,7 +133,7 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue';
+import { ref, computed, onMounted,onUnmounted  } from 'vue';
 import axios from 'axios';
 import 'animate.css';
 
@@ -291,9 +261,10 @@ const afficherScores = async () => {
   }
 };
 
-// Optionnel: Charger les scores au montage du composant
 onMounted(() => {
-  // afficherScores(); // Décommentez si vous voulez charger les scores au démarrage
+});
+onUnmounted(() => {
+  clearInterval(intervalId);
 });
 </script>
 
